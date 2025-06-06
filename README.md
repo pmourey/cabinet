@@ -59,8 +59,15 @@ python manage.py runserver
 
 ## Access Points
 
+Local Development:
+
 - Django admin interface: http://127.0.0.1:8000/admin
 - Main application: http://127.0.0.1:8000
+
+Live Demo:
+
+- Demo site: https://django33.pythonanywhere.com
+- Demo admin interface: https://django33.pythonanywhere.com/admin
 
 ## Authentication
 
