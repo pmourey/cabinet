@@ -37,7 +37,7 @@ pip install -r requirements.txt
 
 1. Create new migrations:
 ```bash
-source .venv/bin/activate
+python manage.py makemigrations medecin
 ```
 
 2. Apply migrations:
