@@ -1,0 +1,36 @@
+{% extends "medecin/base.html" %}
+
+{% block content %}
+    <main>
+        <div>
+            <form method="post">
+                {% csrf_token %}
+
+                {% if form.non_field_errors %}
+                <div>
+                    {% for error in form.non_field_errors %}
+                        <p>{{ error }}</p>
+                    {% endfor %}
+                </div>
+                {% endif %}
+
+                {% for field in form %}
+                <div>
+                    <label for="{{ field.id_for_label }}">{{ field.label }} :</label>
+                    {{ field }}
+                    {% if field.errors %}
+                        {% for error in field.errors %}
+                            <p>{{ error }}</p>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+                {% endfor %}
+
+                <button type="submit">Enregistrer le patient</button>
+            </form>
+        </div>
+        <div>
+            <a href="{% url 'patient_list' %}">Retour à la liste des patients</a>
+        </div>
+    </main>
+{% endblock %}

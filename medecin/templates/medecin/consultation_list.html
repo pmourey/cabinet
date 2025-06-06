@@ -1,0 +1,40 @@
+{% extends "medecin/base.html" %}
+
+{% block content %}
+    {% if patient_id %}
+        <h2>Consultations for Patient #{{ patient_id }}</h2>
+    {% else %}
+        <h2>All Consultations</h2>
+    {% endif %}
+
+    <table>
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Patient</th>
+                <th>Observations</th>
+                <th>Prescription</th>
+                <!-- Add other fields as needed -->
+            </tr>
+        </thead>
+        <tbody>
+            {% for consultation in consultations %}
+            <tr>
+                <td>{{ consultation.date }}</td>
+                <td>{{ consultation.patient }}</td>
+                <td>{{ consultation.observations }}</td>
+                <td>{{ consultation.prescription }}</td>
+                <!-- Add other fields as needed -->
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="3">No consultations found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{% url 'consultations' %}">View All Consultations</a>
+    <a href="{% url 'patient_list' %}">View All Patients</a>
+{% endblock %}
+

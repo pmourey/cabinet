@@ -1,0 +1,32 @@
+{% extends "medecin/base.html" %}
+
+{% block content %}
+    <form method="post">
+        {% csrf_token %}
+        <div>
+            <label for="patient">Patient :</label>
+            <select id="patient" name="patient" required>
+                {% for patient in patients %}
+                    <option value="{{ patient.id }}">{{ patient.nom }} {{ patient.prenom }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div>
+            <label for="date">Date :</label>
+            <input type="date" id="date" name="date" required>
+        </div>
+        <div>
+            <label for="motif">Motif :</label>
+            <input type="text" id="motif" name="motif" required>
+        </div>
+        <div>
+            <label for="observations">Observations :</label>
+            <textarea id="observations" name="observations" required></textarea>
+        </div>
+        <div>
+            <label for="prescription">Prescription :</label>
+            <textarea id="prescription" name="prescription"></textarea>
+        </div>
+        <button type="submit">Enregistrer la consultation</button>
+    </form>
+{% endblock %}
