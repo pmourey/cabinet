@@ -4,9 +4,13 @@ from datetime import timedelta
 
 # Create your views here.
 
+@login_required
+@group_required(['strava', 'admin'])
 def accueil(request):
 	return render(request, 'strava/accueil.html')
 
+@login_required
+@group_required(['strava', 'admin'])
 def activity_list(request):
 	activity_filter = 'running' # ['running', 'cycling', 'walking']
 	activities = get_activities()
