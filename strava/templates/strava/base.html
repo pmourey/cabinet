@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head><title>Gestion sportive</title></head>
+<body>
+    <h1>Gestion sportive</h1>
+    <form method="post" action="{% url 'logout' %}">
+        {% csrf_token %}
+        <button type="submit">Se déconnecter</button>
+    </form>
+
+    {% block content %}{% endblock %}
+    <!-- Footer -->
+    <footer>
+        <p>
+            &copy; 2025 Philippe Mourey. Tous droits réservés.
+            <a href="https://github.com/pmourey/cabinet">Code source</a>
+        </p>
+    </footer>
+</body>
+</html>

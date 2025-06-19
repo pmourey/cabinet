@@ -24,7 +24,7 @@ python3 -m venv .venv
 
 2. Activate the virtual environment:
 ```bash
-source .venv/bin/activate
+source .venv/bin/activate # On Windows, use `.venv\Scripts\activate`
 ```
 
 3. Install Django and dependencies:

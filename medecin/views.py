@@ -1,21 +1,26 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
+
+from cabinet.decorators import group_required
 from .models import Patient, Consultation
 from .forms import ConsultationForm, PatientForm
 
 
 @login_required
+@group_required(['medecin', 'admin'])
 def accueil(request):
 	return render(request, 'medecin/accueil.html')
 
 
 @login_required
+@group_required(['medecin', 'admin'])
 def patient_list(request):
 	patients = Patient.objects.all()
 	return render(request, "medecin/patient_list.html", {"patients": patients})
 
 
 @login_required
+@group_required(['medecin', 'admin'])
 def consultation_list(request, patient_id=None):
 	if patient_id:
 		# Get consultations for a specific patient
@@ -28,6 +33,7 @@ def consultation_list(request, patient_id=None):
 
 
 @login_required
+@group_required(['medecin', 'admin'])
 def add_consultation(request):
 	if request.method == 'POST':
 		form = ConsultationForm(request.POST)
@@ -35,7 +41,7 @@ def add_consultation(request):
 			consultation = form.save(commit=False)
 			consultation.medecin = request.user
 			consultation.save()
-			return redirect('patient_list')
+			return redirect('medecin/patient_list')
 	else:
 		form = ConsultationForm()
 
@@ -44,6 +50,7 @@ def add_consultation(request):
 
 
 @login_required
+@group_required(['medecin', 'admin'])
 def add_patient(request):
 	if request.method == 'POST':
 		form = PatientForm(request.POST)
@@ -51,7 +58,7 @@ def add_patient(request):
 			patient = form.save(commit=False)
 			patient.medecin = request.user  # If you're tracking the creating doctor
 			patient.save()
-			return redirect('patient_list')
+			return redirect('medecin/patient_list')
 	else:
 		form = PatientForm()
 
