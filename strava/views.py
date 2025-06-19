@@ -2,6 +2,9 @@ from django.shortcuts import render
 from .common import get_activities
 from datetime import timedelta
 
+from django.contrib.auth.decorators import login_required
+from cabinet.decorators import group_required
+
 # Create your views here.
 
 @login_required
