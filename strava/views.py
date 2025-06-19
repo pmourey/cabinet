@@ -8,9 +8,9 @@ def accueil(request):
 	return render(request, 'strava/accueil.html')
 
 def activity_list(request):
-	# activity_filter = 'running' # ['running', 'cycling', 'walking']
+	activity_filter = 'running' # ['running', 'cycling', 'walking']
 	activities = get_activities()
-	# activities = list(filter(lambda x: x[6] == activity_filter, activities))
+	activities = list(filter(lambda x: x[6] == activity_filter, activities))
 	total_distance = sum(activity[1] for activity in activities)
 	elapsed_time = timedelta(seconds=sum(activity[2] for activity in activities))
 	average_speed = total_distance / elapsed_time.total_seconds() * 3600
