@@ -1,12 +1,22 @@
 <!DOCTYPE html>
 <html>
-<head><title>Gestion sportive</title></head>
+<head>
+    <title>Gestion sportive</title>
+    <style>
+      .strava-badge- { display: inline-block; height: 48px; }
+      .strava-badge- img { visibility: hidden; height: 48px; }
+      .strava-badge-:hover { background-position: 0 -63px; }
+      .strava-badge-follow { height: 48px; width: 48px; background: url(//badges.strava.com/echelon-sprite-48.png) no-repeat 0 0; }
+    </style>
+</head>
 <body>
     <h1>Gestion sportive</h1>
     <form method="post" action="{% url 'logout' %}">
         {% csrf_token %}
         <button type="submit">Se déconnecter</button>
     </form>
+    <br>
+    <a href="https://strava.com/athletes/40320228" class="strava-badge- strava-badge-follow" target="_blank"><img src="//badges.strava.com/echelon-sprite-48.png" alt="Strava" /></a>
 
     {% block content %}{% endblock %}
     <!-- Footer -->
