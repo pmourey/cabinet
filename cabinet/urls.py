@@ -13,7 +13,8 @@ def root_redirect(request):
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('django.contrib.auth.urls')),
-    path('medecin/', include('medecin.urls', namespace='medecin')),
+    path('', include('medecin.urls', namespace='medecin')),
     path('strava/', include('strava.urls', namespace='strava')),
-    path('', root_redirect, name='root'),
+    # path('', root_redirect, name='root'),
+    path('social-auth/', include('social_django.urls', namespace='social')),
 ]
