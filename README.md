@@ -33,6 +33,17 @@ pip install django
 pip install -r requirements.txt
 ```
 
+4. Create a new Django project:
+```bash
+django-admin startproject cabinet
+```
+
+5. Create your Django application:
+```bash
+cd cabinet
+python manage.py startapp medecin
+```
+
 ## Database Setup
 
 1. Create new migrations:
