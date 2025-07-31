@@ -41,7 +41,7 @@ def add_consultation(request):
 			consultation = form.save(commit=False)
 			consultation.medecin = request.user
 			consultation.save()
-			return redirect('medecin/patient_list')
+			return redirect('patient_list')
 	else:
 		form = ConsultationForm()
 
@@ -58,7 +58,7 @@ def add_patient(request):
 			patient = form.save(commit=False)
 			patient.medecin = request.user  # If you're tracking the creating doctor
 			patient.save()
-			return redirect('medecin/patient_list')
+			return redirect('patient_list')
 	else:
 		form = PatientForm()
 
