@@ -2,6 +2,12 @@ from django import forms
 from .models import Consultation, Patient
 
 class ConsultationForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop('user', None)
+        super().__init__(*args, **kwargs)
+        if user:
+            self.fields['patient'].queryset = Patient.objects.filter(medecin=user)
+    
     class Meta:
         model = Consultation
         fields = ['patient', 'date', 'motif', 'observations', 'prescription']

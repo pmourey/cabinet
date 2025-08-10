@@ -15,7 +15,7 @@ def accueil(request):
 @login_required
 @group_required(['medecin', 'admin'])
 def patient_list(request):
-	patients = Patient.objects.all()
+	patients = Patient.objects.filter(medecin=request.user)
 	return render(request, "medecin/patient_list.html", {"patients": patients})
 
 
@@ -23,11 +23,11 @@ def patient_list(request):
 @group_required(['medecin', 'admin'])
 def consultation_list(request, patient_id=None):
 	if patient_id:
-		# Get consultations for a specific patient
-		consultations = Consultation.objects.filter(patient_id=patient_id)
+		# Get consultations for a specific patient belonging to the doctor
+		consultations = Consultation.objects.filter(patient_id=patient_id, patient__medecin=request.user)
 	else:
-		# Get all consultations
-		consultations = Consultation.objects.all()
+		# Get all consultations for patients belonging to the doctor
+		consultations = Consultation.objects.filter(patient__medecin=request.user)
 
 	return render(request, "medecin/consultation_list.html", {"consultations": consultations, "patient_id": patient_id})
 
@@ -35,11 +35,9 @@ def consultation_list(request, patient_id=None):
 @login_required
 @group_required(['medecin', 'admin'])
 def add_consultation(request):
-	form = ConsultationForm(request.POST or None)
+	form = ConsultationForm(request.POST or None, user=request.user)
 	if form.is_valid():
-		consultation = form.save(commit=False)
-		consultation.medecin = request.user
-		consultation.save()
+		consultation = form.save()
 		return redirect('medecin:patient_list')
 
 	return render(request, 'medecin/consultation_form.html', {'form': form})
