@@ -42,8 +42,7 @@ def add_consultation(request):
 		consultation.save()
 		return redirect('medecin:patient_list')
 
-	patients = Patient.objects.all()
-	return render(request, 'medecin/consultation_form.html', {'form': form, 'patients': patients})
+	return render(request, 'medecin/consultation_form.html', {'form': form})
 
 
 @login_required
