@@ -35,15 +35,12 @@ def consultation_list(request, patient_id=None):
 @login_required
 @group_required(['medecin', 'admin'])
 def add_consultation(request):
-	if request.method == 'POST':
-		form = ConsultationForm(request.POST)
-		if form.is_valid():
-			consultation = form.save(commit=False)
-			consultation.medecin = request.user
-			consultation.save()
-			return redirect('patient_list')
-	else:
-		form = ConsultationForm()
+	form = ConsultationForm(request.POST or None)
+	if form.is_valid():
+		consultation = form.save(commit=False)
+		consultation.medecin = request.user
+		consultation.save()
+		return redirect('medecin:patient_list')
 
 	patients = Patient.objects.all()
 	return render(request, 'medecin/consultation_form.html', {'form': form, 'patients': patients})
@@ -52,14 +49,11 @@ def add_consultation(request):
 @login_required
 @group_required(['medecin', 'admin'])
 def add_patient(request):
-	if request.method == 'POST':
-		form = PatientForm(request.POST)
-		if form.is_valid():
-			patient = form.save(commit=False)
-			patient.medecin = request.user  # If you're tracking the creating doctor
-			patient.save()
-			return redirect('patient_list')
-	else:
-		form = PatientForm()
+	form = PatientForm(request.POST or None)
+	if form.is_valid():
+		patient = form.save(commit=False)
+		patient.medecin = request.user
+		patient.save()
+		return redirect('medecin:patient_list')
 
 	return render(request, 'medecin/patient_form.html', {'form': form})

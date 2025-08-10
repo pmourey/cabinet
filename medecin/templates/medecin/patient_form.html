@@ -1,37 +1,46 @@
 {% extends "medecin/base.html" %}
 
 {% block content %}
-    <main>
-        <div>
-            <form method="post">
-                {% csrf_token %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h3>Nouveau patient</h3>
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
 
-                {% if form.non_field_errors %}
-                <div>
-                    {% for error in form.non_field_errors %}
-                        <p>{{ error }}</p>
-                    {% endfor %}
-                </div>
-                {% endif %}
-
-                {% for field in form %}
-                <div>
-                    <label for="{{ field.id_for_label }}">{{ field.label }} :</label>
-                    {{ field }}
-                    {% if field.errors %}
-                        {% for error in field.errors %}
-                            <p>{{ error }}</p>
+                    {% if form.non_field_errors %}
+                    <div class="alert alert-danger">
+                        {% for error in form.non_field_errors %}
+                            <p class="mb-0">{{ error }}</p>
                         {% endfor %}
+                    </div>
                     {% endif %}
-                </div>
-                {% endfor %}
 
-                <button type="submit">Enregistrer le patient</button>
-            </form>
+                    {% for field in form %}
+                    <div class="mb-3">
+                        <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }} :</label>
+                        {{ field }}
+                        {% if field.errors %}
+                            {% for error in field.errors %}
+                                <div class="text-danger small">{{ error }}</div>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <a href="{% url 'medecin:patient_list' %}" class="btn btn-outline-secondary me-2">Liste des patients</a>
+                            <a href="{% url 'medecin:accueil' %}" class="btn btn-secondary">Accueil</a>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Enregistrer le patient</button>
+                    </div>
+                </form>
+            </div>
         </div>
-        <div>
-            <a href="{% url 'medecin:patient_list' %}">Retour à la liste des patients</a>
-            <a href="{% url 'medecin:accueil' %}">Retour accueil</a>
-        </div>
-    </main>
+    </div>
+</div>
 {% endblock %}

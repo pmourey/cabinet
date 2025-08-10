@@ -1,35 +1,46 @@
 {% extends "medecin/base.html" %}
 
 {% block content %}
-    <form method="post">
-        {% csrf_token %}
-        <div>
-            <label for="patient">Patient :</label>
-            <select id="patient" name="patient" required>
-                {% for patient in patients %}
-                    <option value="{{ patient.id }}">{{ patient.nom }} {{ patient.prenom }}</option>
-                {% endfor %}
-            </select>
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h3>Nouvelle consultation</h3>
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="patient" class="form-label">Patient :</label>
+                        <select id="patient" name="patient" class="form-select" required>
+                            {% for patient in patients %}
+                                <option value="{{ patient.id }}">{{ patient.nom }} {{ patient.prenom }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="date" class="form-label">Date :</label>
+                        <input type="date" id="date" name="date" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="motif" class="form-label">Motif :</label>
+                        <input type="text" id="motif" name="motif" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="observations" class="form-label">Observations :</label>
+                        <textarea id="observations" name="observations" class="form-control" rows="4" required></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="prescription" class="form-label">Prescription :</label>
+                        <textarea id="prescription" name="prescription" class="form-control" rows="3"></textarea>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <a href="{% url 'medecin:accueil' %}" class="btn btn-secondary">Retour accueil</a>
+                        <button type="submit" class="btn btn-primary">Enregistrer la consultation</button>
+                    </div>
+                </form>
+            </div>
         </div>
-        <div>
-            <label for="date">Date :</label>
-            <input type="date" id="date" name="date" required>
-        </div>
-        <div>
-            <label for="motif">Motif :</label>
-            <input type="text" id="motif" name="motif" required>
-        </div>
-        <div>
-            <label for="observations">Observations :</label>
-            <textarea id="observations" name="observations" required></textarea>
-        </div>
-        <div>
-            <label for="prescription">Prescription :</label>
-            <textarea id="prescription" name="prescription"></textarea>
-        </div>
-        <button type="submit">Enregistrer la consultation</button>
-    </form>
-
-    <a href="{% url 'medecin:accueil' %}">Retour accueil</a>
-
+    </div>
+</div>
 {% endblock %}

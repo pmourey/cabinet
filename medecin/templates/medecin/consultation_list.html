@@ -1,42 +1,51 @@
 {% extends "medecin/base.html" %}
 
 {% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
     {% if patient_id %}
-        <h2>Consultations for Patient #{{ patient_id }}</h2>
+        <h2>Consultations du patient #{{ patient_id }}</h2>
     {% else %}
-        <h2>All Consultations</h2>
+        <h2>Toutes les consultations</h2>
     {% endif %}
+    <a href="{% url 'medecin:add_consultation' %}" class="btn btn-primary">Nouvelle consultation</a>
+</div>
 
-    <table border="1">
-        <thead>
-            <tr>
-                <th>Date</th>
-                <th>Patient</th>
-                <th>Observations</th>
-                <th>Prescription</th>
-                <!-- Add other fields as needed -->
-            </tr>
-        </thead>
-        <tbody>
-            {% for consultation in consultations %}
-            <tr>
-                <td>{{ consultation.date }}</td>
-                <td>{{ consultation.patient }}</td>
-                <td>{{ consultation.observations }}</td>
-                <td>{{ consultation.prescription }}</td>
-                <!-- Add other fields as needed -->
-            </tr>
-            {% empty %}
-            <tr>
-                <td colspan="3">No consultations found.</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+<div class="card">
+    <div class="card-body">
+        {% if consultations %}
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Patient</th>
+                        <th>Observations</th>
+                        <th>Prescription</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for consultation in consultations %}
+                    <tr>
+                        <td>{{ consultation.date }}</td>
+                        <td>{{ consultation.patient }}</td>
+                        <td>{{ consultation.observations|truncatewords:10 }}</td>
+                        <td>{{ consultation.prescription|truncatewords:10 }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <p class="text-muted">Aucune consultation trouvée.</p>
+        {% endif %}
+    </div>
+</div>
 
-    <a href="{% url 'medecin:consultations' %}">View All Consultations</a>
-    <a href="{% url 'medecin:patient_list' %}">View All Patients</a>
-    <a href="{% url 'medecin:accueil' %}">Retour accueil</a>
+<div class="mt-3">
+    <a href="{% url 'medecin:consultations' %}" class="btn btn-outline-secondary me-2">Toutes les consultations</a>
+    <a href="{% url 'medecin:patient_list' %}" class="btn btn-outline-secondary me-2">Liste des patients</a>
+    <a href="{% url 'medecin:accueil' %}" class="btn btn-secondary">Accueil</a>
+</div>
 
 {% endblock %}
 
