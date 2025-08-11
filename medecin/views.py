@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
+from django.core.exceptions import ValidationError
 
 from cabinet.decorators import group_required
 from .models import Patient, Consultation
@@ -37,8 +38,15 @@ def consultation_list(request, patient_id=None):
 def add_consultation(request):
 	form = ConsultationForm(request.POST or None, user=request.user)
 	if form.is_valid():
-		consultation = form.save()
-		return redirect('medecin:patient_list')
+		consultation = form.save(commit=False)
+		try:
+			consultation.full_clean()
+			consultation.save()
+			return redirect('medecin:patient_list')
+		except ValidationError as e:
+			for field, errors in e.message_dict.items():
+				for error in errors:
+					form.add_error(field, error)
 
 	return render(request, 'medecin/consultation_form.html', {'form': form})
 
@@ -50,7 +58,13 @@ def add_patient(request):
 	if form.is_valid():
 		patient = form.save(commit=False)
 		patient.medecin = request.user
-		patient.save()
-		return redirect('medecin:patient_list')
+		try:
+			patient.full_clean()
+			patient.save()
+			return redirect('medecin:patient_list')
+		except ValidationError as e:
+			for field, errors in e.message_dict.items():
+				for error in errors:
+					form.add_error(field, error)
 
 	return render(request, 'medecin/patient_form.html', {'form': form})

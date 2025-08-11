@@ -98,7 +98,7 @@ base.html (Bootstrap 5.3)
 ## Points d'Amélioration Identifiés
 
 - [x] **Formulaires** - Ajouter widget_tweaks pour styling Bootstrap
-- [ ] **Validation** - Renforcer la validation des données
+- [x] **Validation** - Renforcer la validation des données
 - [ ] **Pagination** - Ajouter pour les listes longues
 - [ ] **Recherche** - Filtres sur patients/consultations
 - [ ] **Export** - PDF des consultations
