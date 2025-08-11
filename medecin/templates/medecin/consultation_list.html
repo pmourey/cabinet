@@ -12,7 +12,7 @@
 
 <div class="card">
     <div class="card-body">
-        {% if consultations %}
+        {% if page_obj %}
         <div class="table-responsive">
             <table class="table table-striped">
                 <thead>
@@ -24,7 +24,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for consultation in consultations %}
+                    {% for consultation in page_obj %}
                     <tr>
                         <td>{{ consultation.date }}</td>
                         <td>{{ consultation.patient }}</td>
@@ -35,6 +35,35 @@
                 </tbody>
             </table>
         </div>
+        
+        <!-- Pagination -->
+        {% if page_obj.has_other_pages %}
+        <nav>
+          <ul class="pagination justify-content-center mt-3">
+            {% if page_obj.has_previous %}
+              <li class="page-item">
+                <a class="page-link" href="?page=1">&laquo; Premier</a>
+              </li>
+              <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Précédent</a>
+              </li>
+            {% endif %}
+            
+            <li class="page-item active">
+              <span class="page-link">{{ page_obj.number }} / {{ page_obj.paginator.num_pages }}</span>
+            </li>
+            
+            {% if page_obj.has_next %}
+              <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.next_page_number }}">Suivant</a>
+              </li>
+              <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">Dernier &raquo;</a>
+              </li>
+            {% endif %}
+          </ul>
+        </nav>
+        {% endif %}
         {% else %}
         <p class="text-muted">Aucune consultation trouvée.</p>
         {% endif %}

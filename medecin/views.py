@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ValidationError
+from django.core.paginator import Paginator
 
 from cabinet.decorators import group_required
 from .models import Patient, Consultation
@@ -17,7 +18,10 @@ def accueil(request):
 @group_required(['medecin', 'admin'])
 def patient_list(request):
 	patients = Patient.objects.filter(medecin=request.user)
-	return render(request, "medecin/patient_list.html", {"patients": patients})
+	paginator = Paginator(patients, 10)
+	page_number = request.GET.get('page')
+	page_obj = paginator.get_page(page_number)
+	return render(request, "medecin/patient_list.html", {"page_obj": page_obj})
 
 
 @login_required
@@ -30,7 +34,10 @@ def consultation_list(request, patient_id=None):
 		# Get all consultations for patients belonging to the doctor
 		consultations = Consultation.objects.filter(patient__medecin=request.user)
 
-	return render(request, "medecin/consultation_list.html", {"consultations": consultations, "patient_id": patient_id})
+	paginator = Paginator(consultations, 3)
+	page_number = request.GET.get('page')
+	page_obj = paginator.get_page(page_number)
+	return render(request, "medecin/consultation_list.html", {"page_obj": page_obj, "patient_id": patient_id})
 
 
 @login_required
