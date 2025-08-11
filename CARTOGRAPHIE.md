@@ -100,5 +100,5 @@ base.html (Bootstrap 5.3)
 - [x] **Formulaires** - Ajouter widget_tweaks pour styling Bootstrap
 - [x] **Validation** - Renforcer la validation des données
 - [x] **Pagination** - Ajouter pour les listes longues
-- [ ] **Recherche** - Filtres sur patients/consultations
+- [x] **Recherche** - Filtres sur patients/consultations
 - [ ] **Export** - PDF des consultations

@@ -10,6 +10,19 @@
     <a href="{% url 'medecin:add_consultation' %}" class="btn btn-primary">Nouvelle consultation</a>
 </div>
 
+<!-- Search form -->
+<div class="card mb-3">
+  <div class="card-body">
+    <form method="get" class="d-flex">
+      <input type="text" name="search" class="form-control me-2" placeholder="Rechercher par motif ou patient" value="{{ search }}">
+      <button type="submit" class="btn btn-outline-secondary">Rechercher</button>
+      {% if search %}
+        <a href="{% url 'medecin:consultations' %}" class="btn btn-outline-danger ms-2">Effacer</a>
+      {% endif %}
+    </form>
+  </div>
+</div>
+
 <div class="card">
     <div class="card-body">
         {% if page_obj %}

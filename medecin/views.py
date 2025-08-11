@@ -18,10 +18,20 @@ def accueil(request):
 @group_required(['medecin', 'admin'])
 def patient_list(request):
 	patients = Patient.objects.filter(medecin=request.user)
+	
+	# Search functionality
+	search = request.GET.get('search')
+	if search:
+		patients = patients.filter(
+			nom__icontains=search
+		) | patients.filter(
+			prenom__icontains=search
+		)
+	
 	paginator = Paginator(patients, 10)
 	page_number = request.GET.get('page')
 	page_obj = paginator.get_page(page_number)
-	return render(request, "medecin/patient_list.html", {"page_obj": page_obj})
+	return render(request, "medecin/patient_list.html", {"page_obj": page_obj, "search": search})
 
 
 @login_required
@@ -34,10 +44,21 @@ def consultation_list(request, patient_id=None):
 		# Get all consultations for patients belonging to the doctor
 		consultations = Consultation.objects.filter(patient__medecin=request.user)
 
-	paginator = Paginator(consultations, 3)
+	# Search functionality
+	search = request.GET.get('search')
+	if search:
+		consultations = consultations.filter(
+			motif__icontains=search
+		) | consultations.filter(
+			patient__nom__icontains=search
+		) | consultations.filter(
+			patient__prenom__icontains=search
+		)
+
+	paginator = Paginator(consultations, 10)
 	page_number = request.GET.get('page')
 	page_obj = paginator.get_page(page_number)
-	return render(request, "medecin/consultation_list.html", {"page_obj": page_obj, "patient_id": patient_id})
+	return render(request, "medecin/consultation_list.html", {"page_obj": page_obj, "patient_id": patient_id, "search": search})
 
 
 @login_required

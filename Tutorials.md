@@ -78,3 +78,35 @@ J'ai aussi modifié les vues pour afficher les erreurs de validation des modèle
 3. Importé `ValidationError` dans les vues
 
 Maintenant, quand une validation échoue au niveau du modèle (comme format téléphone, date future, etc.), l'erreur s'affiche dans le formulaire Bootstrap avec le styling existant.
+
+### Pagination - Ajouter pour les listes longues
+
+J'ai ajouté la pagination aux listes :
+
+Vues :
+* Importé Paginator de Django 
+* Ajouté pagination avec 10 éléments par page 
+* Remplacé les variables patients/consultations par page_obj
+
+Templates :
+* Mis à jour les boucles pour utiliser page_obj 
+* Ajouté les contrôles de pagination Bootstrap avec liens Premier/Précédent/Suivant/Dernier 
+* Affichage du numéro de page actuel
+
+La pagination s'affiche automatiquement quand il y a plus de 10 éléments.
+
+### Recherche - Filtres sur patients/consultations
+
+J'ai ajouté la fonctionnalité de recherche :
+
+Vues :
+
+* Patients : recherche par nom ou prénom (icontains)
+* Consultations : recherche par motif ou nom/prénom du patient
+
+Templates :
+* Formulaire de recherche avec champ de saisie 
+* Bouton "Effacer" pour supprimer le filtre 
+* Conservation de la valeur recherchée dans le champ
+
+La recherche fonctionne avec la pagination et est insensible à la casse.
