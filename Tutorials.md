@@ -5,6 +5,9 @@
     * [Validation - Renforcer la validation des données](#validation---renforcer-la-validation-des-données)
       * [Modèles (clean methods):](#modèles-clean-methods)
       * [Formulaires (clean_field methods):](#formulaires-clean_field-methods)
+    * [Pagination - Ajouter pour les listes longues](#pagination---ajouter-pour-les-listes-longues)
+    * [Recherche - Filtres sur patients/consultations](#recherche---filtres-sur-patientsconsultations)
+    * [Export PDF des consultations](#export-pdf-des-consultations)
 <!-- TOC -->
 
 ### Ajout styling Bootstrap automatique
