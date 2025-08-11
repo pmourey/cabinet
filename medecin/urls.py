@@ -13,5 +13,8 @@ urlpatterns = [
     path('consultations/', views.consultation_list, name='consultations'),
     # URL for patient-specific consultations
     path('consultations/<int:patient_id>/', views.consultation_list, name='consultations_patient'),
+    # PDF export URLs
+    path('consultations/export/pdf/', views.export_consultations_pdf, name='export_consultations_pdf'),
+    path('consultations/<int:patient_id>/export/pdf/', views.export_consultations_pdf, name='export_patient_consultations_pdf'),
 ]
 

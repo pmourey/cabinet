@@ -7,7 +7,14 @@
     {% else %}
         <h2>Toutes les consultations</h2>
     {% endif %}
-    <a href="{% url 'medecin:add_consultation' %}" class="btn btn-primary">Nouvelle consultation</a>
+    <div>
+        {% if patient_id %}
+            <a href="{% url 'medecin:export_patient_consultations_pdf' patient_id %}" class="btn btn-outline-success me-2">Export PDF</a>
+        {% else %}
+            <a href="{% url 'medecin:export_consultations_pdf' %}" class="btn btn-outline-success me-2">Export PDF</a>
+        {% endif %}
+        <a href="{% url 'medecin:add_consultation' %}" class="btn btn-primary">Nouvelle consultation</a>
+    </div>
 </div>
 
 <!-- Search form -->

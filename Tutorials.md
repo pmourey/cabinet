@@ -110,3 +110,25 @@ Templates :
 * Conservation de la valeur recherchée dans le champ
 
 La recherche fonctionne avec la pagination et est insensible à la casse.
+
+### Export PDF des consultations
+
+J'ai ajouté l'export PDF des consultations :
+
+Dépendance :
+* Ajouté reportlab==4.0.4 dans requirements.txt
+
+Vue :
+* export_consultations_pdf() génère un PDF avec tableau des consultations 
+* Support pour toutes les consultations ou celles d'un patient spécifique 
+* Troncature du texte long pour l'affichage
+
+URLs :
+* /consultations/export/pdf/ - toutes les consultations 
+* /consultations/<id>/export/pdf/ - consultations d'un patient
+
+Template :
+* Bouton "Export PDF" dans la liste des consultations 
+* Téléchargement automatique du fichier PDF
+
+Pour installer : pip install reportlab==4.0.4

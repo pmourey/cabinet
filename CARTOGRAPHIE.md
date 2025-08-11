@@ -101,4 +101,4 @@ base.html (Bootstrap 5.3)
 - [x] **Validation** - Renforcer la validation des données
 - [x] **Pagination** - Ajouter pour les listes longues
 - [x] **Recherche** - Filtres sur patients/consultations
-- [ ] **Export** - PDF des consultations
+- [x] **Export** - PDF des consultations
