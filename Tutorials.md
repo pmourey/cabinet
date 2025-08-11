@@ -1,4 +1,15 @@
-### J'ai modifié consultation_form.html pour utiliser widget_tweaks :
+<!-- TOC -->
+    * [Ajout styling Bootstrap automatique](#ajout-styling-bootstrap-automatique)
+    * [How to populate select lists automatically by Django through the form field definition](#how-to-populate-select-lists-automatically-by-django-through-the-form-field-definition)
+    * [Responsive design activation](#responsive-design-activation)
+    * [Validation - Renforcer la validation des données](#validation---renforcer-la-validation-des-données)
+      * [Modèles (clean methods):](#modèles-clean-methods)
+      * [Formulaires (clean_field methods):](#formulaires-clean_field-methods)
+<!-- TOC -->
+
+### Ajout styling Bootstrap automatique
+
+J'ai modifié consultation_form.html pour utiliser widget_tweaks :
 
 1. Ajouté `{% load widget_tweaks %}` en haut du template 
 2. Remplacé tous les champs HTML manuels par les champs du formulaire Django avec |add_class 
@@ -6,7 +17,8 @@
 
 Maintenant les deux formulaires utilisent widget_tweaks pour un styling Bootstrap cohérent et automatique.
 
-### The select list is populated automatically by Django through the form field definition. Here's how it works:
+### How to populate select lists automatically by Django through the form field definition
+
 
 1. In the form (ConsultationForm):
     ```class ConsultationForm(forms.ModelForm):
@@ -34,12 +46,35 @@ Maintenant les deux formulaires utilisent widget_tweaks pour un styling Bootstra
     ```
 
 ### Responsive design activation
-    ```
+
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    ```
 
 Cette balise est essentielle pour que Bootstrap fonctionne correctement sur mobile. Elle indique au navigateur :
 
     - width=device-width : utiliser la largeur de l'écran de l'appareil
     - initial-scale=1 : ne pas zoomer par défaut
 
+
+### Validation - Renforcer la validation des données
+
+J'ai renforcé la validation des données avec :
+
+#### Modèles (clean methods):
+
+* Patient : Format téléphone, date naissance pas future, numéro sécurité sociale 15 chiffres 
+* Consultation : Date pas future, motif min 3 caractères, observations obligatoires
+
+#### Formulaires (clean_field methods):
+
+* PatientForm : Nom/prénom lettres uniquement + capitalisation, téléphone format valide 
+* ConsultationForm : Date pas future, motif min 3 caractères, observations obligatoires
+
+Les validations s'appliquent automatiquement lors de `form.is_valid()` et affichent les erreurs dans les templates Bootstrap existants.
+
+J'ai aussi modifié les vues pour afficher les erreurs de validation des modèles :
+
+1. Ajouté `full_clean()` avant `save()` pour déclencher la validation du modèle 
+2. Capturé les `ValidationError` et ajouté les erreurs au formulaire avec `form.add_error()`
+3. Importé `ValidationError` dans les vues
+
+Maintenant, quand une validation échoue au niveau du modèle (comme format téléphone, date future, etc.), l'erreur s'affiche dans le formulaire Bootstrap avec le styling existant.
